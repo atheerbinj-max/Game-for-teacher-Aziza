@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>مغامرة الصف مع أستاذة عزيزة</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+    color: #5b2c6f;
+    margin: 0; padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    direction: rtl;
+  }
+  #game-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(107, 33, 168, 0.3);
+    max-width: 600px;
+    width: 90%;
+    padding: 30px 25px;
+    text-align: center;
+    position: relative;
+  }
+  h1, h2 { margin-bottom: 20px; }
+  p { font-size: 1.3rem; margin-bottom: 30px; min-height: 80px; }
+  button {
+    background: #af52bf;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: background-color 0.3s ease;
+    min-width: 180px;
+  }
+  button:hover { background: #7a2e8e; }
+  .hidden { display: none; }
+  .floating {
+    position: fixed;
+    pointer-events: none;
+    animation: floatUp 4s ease forwards;
+    font-size: 2rem;
+    user-select: none;
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
+  }
+</style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="screen-1" class="screen">
+      <h1>أهلاً أستاذتنا عزيزة!</h1>
+      <p>اليوم في الصف، حدث شيء غريب… هل أنت جاهزة لمغامرتك الصغيرة؟</p>
+      <button id="start-btn">ابدئي المغامرة</button>
+    </div>
+
+    <div id="screen-2" class="screen hidden">
+      <h2>دخلتِ الصف ووجدت الطلاب يبتسمون بطريقة غريبة… ماذا تفعلين؟</h2>
+      <button class="choice-btn" data-msg="واو، يبدو أن الطلاب يخططون لمقلب لطيف 😏">تجلسين بهدوء وتراقبين</button>
+      <button class="choice-btn" data-msg="ضحكتِ معهم، الجو مليء بالمرح 😂">تبدأين بالمزاح معهم</button>
+      <p id="screen-2-msg" style="min-height: 50px; margin-top: 20px; font-weight: bold;"></p>
+      <button id="screen-2-next" class="hidden">التالي</button>
+    </div>
+
+    <div id="screen-3" class="screen hidden">
+      <h2>أحد الطلاب بدأ يقول أشياء غريبة ويحاول يفاجئك… ماذا تفعلين؟</h2>
+      <button class="choice-btn" data-msg="الطلاب يضحكون بصوت عالٍ، وأنتِ ملكة المزح 😆">تردين بنكتة على مزاحه</button>
+      <button class="choice-btn" data-msg="الجميع يترقب ردة فعلك، والجو مليء بالتشويق 😉">تجاهلين وتكملي الدرس</button>
+      <p id="screen-3-msg" style="min-height: 50px; margin-top: 20px; font-weight: bold;"></p>
+      <button id="screen-3-next" class="hidden">التالي</button>
+    </div>
+
+    <div id="screen-4" class="screen hidden">
+      <h2>الصف مليء بالأوراق والألوان، وفجأة يبدأ الطلاب بالتعاون لمفاجأة ما…</h2>
+      <button class="choice-btn" data-msg="عمل جماعي ممتع، والضحك يملأ الصف 😄">تشاركينهم التخطيط</button>
+      <button class="choice-btn" data-msg="خطة صغيرة تكبر يومًا بعد يوم… الكل متحمس!">تراقبين وتبتسمين سرًا</button>
+      <p id="screen-4-msg" style="min-height: 50px; margin-top: 20px; font-weight: bold;"></p>
+      <button id="screen-4-next" class="hidden">التالي</button>
+    </div>
+
+    <div id="screen-5" class="screen hidden">
+      <h2>اقترب وقت النهاية، وماذا ستفعلين لتختتم المغامرة؟</h2>
+      <button class="choice-btn" data-msg="ضحك ممتد، الطلاب مستمتعون بردك المرح 😂">تسأليني عن الطلاب بطريقة مضحكة</button>
+      <button class="choice-btn" data-msg="الضحك يتصاعد، ومفاجأت صغيرة تظهر في كل زاوية 😆">تخبري الطلاب بنكتة عن الصف</button>
+      <p id="screen-5-msg" style="min-height: 50px; margin-top: 20px; font-weight: bold;"></p>
+      <button id="screen-5-next" class="hidden">التالي</button>
+    </div>
+
+    <div id="screen-6" class="screen hidden">
+      <h1>وهكذا انتهت مغامرة اليوم في الصف…</h1>
+      <p style="font-size: 1.4rem; font-weight: bold; margin-bottom: 30px;">
+        شكراً أستاذتنا الغالية عزيزة 💖<br />
+        فاجأناكي قبل ما تفاجئينا 😍<br />
+        وجودك معنا يجعل كل يوم مليء بالمرح والضحك!
+      </p>
+      <button id="restart-btn">إعادة القصة</button>
+    </div>
+  </div>
+
+<script>
+  const laughSound = new Audio('https://actions.google.com/sounds/v1/human/laughing_giggle.ogg');
+  const clapSound = new Audio('https://actions.google.com/sounds/v1/human/applause.ogg');
+
+  const screens = [
+    document.getElementById('screen-1'),
+    document.getElementById('screen-2'),
+    document.getElementById('screen-3'),
+    document.getElementById('screen-4'),
+    document.getElementById('screen-5'),
+    document.getElementById('screen-6'),
+  ];
+
+  function showScreen(index) {
+    screens.forEach((screen, i) => {
+      screen.classList.toggle('hidden', i !== index);
+    });
+  }
+
+  document.getElementById('start-btn').addEventListener('click', () => { showScreen(1); });
+
+  function setupChoices(screenIndex) {
+    const screen = screens[screenIndex];
+    const buttons = screen.querySelectorAll('.choice-btn');
+    const msgP = screen.querySelector('p[id$="-msg"]');
+    const nextBtn = screen.querySelector('button[id$="-next"]');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        msgP.textContent = btn.getAttribute('data-msg');
+        laughSound.currentTime = 0; laughSound.play();
+        buttons.forEach(b => b.disabled = true);
+        nextBtn.classList.remove('hidden');
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextBtn.classList.add('hidden');
+      buttons.forEach(b => b.disabled = false);
+      msgP.textContent = '';
+      showScreen(screenIndex + 1);
+    });
+  }
+
+  setupChoices(1);
+  setupChoices(2);
+  setupChoices(3);
+  setupChoices(4);
+
+  document.getElementById('restart-btn').addEventListener('click', () => { showScreen(0); });
+
+  function createFloatingSymbol(symbol, color) {
+    const el = document.createElement('div');
+    el.textContent = symbol;
+    el.style.color = color;
+    el.className = 'floating';
+    el.style.left = Math.random() * window.innerWidth + 'px';
+    el.style.top = window.innerHeight + 20 + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  const endScreen = screens[5];
+  const observer = new MutationObserver(() => {
+    if (!endScreen.classList.contains('hidden')) {
+      laughSound.play(); clapSound.play();
+      let count = 0;
+      const interval = setInterval(() => {
+        createFloatingSymbol('❤️', '#e91e63');
+        createFloatingSymbol('🌹', '#c2185b');
+        count++; if(count > 15) clearInterval(interval);
+      }, 250);
+    }
+  });
+  observer.observe(endScreen, { attributes: true, attributeFilter: ['class'] });
+</script>
+</body>
+</html>
